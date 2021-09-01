@@ -1,11 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-
-const App = () => {
-    return (
-        <h1>Laravel SPA</h1>
-    )
-}
+import App from './app'
 
 ReactDom.render(
     <App />,
