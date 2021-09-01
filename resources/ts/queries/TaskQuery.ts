@@ -1,12 +1,25 @@
-import axios from "axios"
-import { useQuery } from "react-query"
-import { Task } from "../types/task"
+import { useQuery, useMutation, useQueryClient } from "react-query"
 import * as api from "../api/TaskAPI"
+import { toast } from "react-toastify"
 
 const useTasks = () => {
     return useQuery('tasks',  () => api.getTasks())
 }
 
+const useUpdateDoneTask = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation(api.updateDoneTask, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('tasks')
+        },
+        onError: () => {
+            toast.error('更新に失敗しました。')
+        }
+    })
+}
+
 export {
-    useTasks
+    useTasks,
+    useUpdateDoneTask
 }

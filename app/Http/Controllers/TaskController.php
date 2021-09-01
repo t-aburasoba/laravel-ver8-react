@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -70,5 +71,21 @@ class TaskController extends Controller
         return $task->delete()
             ? response()->json($task)
             : response([], 500);
+    }
+
+    /**
+     * is_done の更新
+     *
+     * @param Task $task
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateDone(Task $task, Request $request)
+    {
+        $task->is_done = $request->is_done;
+
+        return $task->update()
+            ? response()->json($task)
+            : response()->json([], 500);
     }
 }
